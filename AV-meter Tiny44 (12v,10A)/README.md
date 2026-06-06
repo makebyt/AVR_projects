@@ -42,3 +42,6 @@ _______________________________________________
 Тогда 1А = 100 бит
 
 АЦП 1,1в(1023 Бита)
+
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-orange)](https://ko-fi.com/makebyt)
