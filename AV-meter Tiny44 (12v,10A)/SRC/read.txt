@@ -1,0 +1,23 @@
+﻿v 1.1.16/64
+16 or 64 ADC measurements
+(16 или 64 замера АЦП)
+
+v 2.0 
+on interruption 
+(на прерывании)
+
+fuses:
+H-DF
+L-E2
+f=8Mhz int.RC
+BOD off
+----------------
+H-DD
+L-E2
+f=8Mhz int.RC
+BOD 2.7v
+----------------
+H-DC
+L-E2
+f=8Mhz int.RC
+BOD 4.3v
