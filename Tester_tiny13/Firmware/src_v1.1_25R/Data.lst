@@ -1,0 +1,844 @@
+
+D:\_Project\TESTER~1\SRC_V1~1.1_2\Data.elf:     file format elf32-avr
+
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	09 c0       	rjmp	.+18     	; 0x14 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+
+00000014 <__ctors_end>:
+  14:	11 24       	eor	r1, r1
+  16:	1f be       	out	0x3f, r1	; 63
+  18:	cf e9       	ldi	r28, 0x9F	; 159
+  1a:	cd bf       	out	0x3d, r28	; 61
+
+0000001c <__do_copy_data>:
+  1c:	10 e0       	ldi	r17, 0x00	; 0
+  1e:	a0 e6       	ldi	r26, 0x60	; 96
+  20:	b0 e0       	ldi	r27, 0x00	; 0
+  22:	ea ee       	ldi	r30, 0xEA	; 234
+  24:	f3 e0       	ldi	r31, 0x03	; 3
+  26:	02 c0       	rjmp	.+4      	; 0x2c <.do_copy_data_start>
+
+00000028 <.do_copy_data_loop>:
+  28:	05 90       	lpm	r0, Z+
+  2a:	0d 92       	st	X+, r0
+
+0000002c <.do_copy_data_start>:
+  2c:	a4 37       	cpi	r26, 0x74	; 116
+  2e:	b1 07       	cpc	r27, r17
+  30:	d9 f7       	brne	.-10     	; 0x28 <.do_copy_data_loop>
+
+00000032 <__do_clear_bss>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a4 e7       	ldi	r26, 0x74	; 116
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a0 38       	cpi	r26, 0x80	; 128
+  3e:	b1 07       	cpc	r27, r17
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	ec d0       	rcall	.+472    	; 0x21c <main>
+  44:	d0 c1       	rjmp	.+928    	; 0x3e6 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <FCD_Custom0_I2Cask>:
+	DATA_0;
+}
+
+static void FCD_Custom0_I2Cask()
+{
+	BitCLK_0;
+  48:	ba 9a       	sbi	0x17, 2	; 23
+  4a:	c2 98       	cbi	0x18, 2	; 24
+	DATA_F;
+  4c:	b9 98       	cbi	0x17, 1	; 23
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  4e:	80 e3       	ldi	r24, 0x30	; 48
+  50:	90 e0       	ldi	r25, 0x00	; 0
+  52:	01 97       	sbiw	r24, 0x01	; 1
+  54:	f1 f7       	brne	.-4      	; 0x52 <FCD_Custom0_I2Cask+0xa>
+  56:	06 c0       	rjmp	.+12     	; 0x64 <FCD_Custom0_I2Cask+0x1c>
+	#else
+
+		//PIN* register always 2 bytes in front of PORT* register
+		//Confirmed Devices - ATMEGA324P, ATTINY2313, AT90CAN
+
+		*Port--;
+  58:	88 b3       	in	r24, 0x18	; 24
+		*Port--;
+  5a:	87 b3       	in	r24, 0x17	; 23
+		return test_bit(*Port, Pin);
+  5c:	86 b3       	in	r24, 0x16	; 22
+  5e:	82 70       	andi	r24, 0x02	; 2
+	delay_us(20); 
+	while (FCV_ACK>0) // ???? ???????? 0 ?? ?????
+	    {
+	     FCV_ACK = FC_CAL_Bit_In(DATA_PORT, DATA_PIN);		
+  60:	80 93 7a 00 	sts	0x007A, r24
+static void FCD_Custom0_I2Cask()
+{
+	BitCLK_0;
+	DATA_F;
+	delay_us(20); 
+	while (FCV_ACK>0) // ???? ???????? 0 ?? ?????
+  64:	80 91 7a 00 	lds	r24, 0x007A
+  68:	88 23       	and	r24, r24
+  6a:	b1 f7       	brne	.-20     	; 0x58 <FCD_Custom0_I2Cask+0x10>
+	    {
+	     FCV_ACK = FC_CAL_Bit_In(DATA_PORT, DATA_PIN);		
+	    }
+	BitCLK_F;
+  6c:	ba 98       	cbi	0x17, 2	; 23
+  6e:	80 e3       	ldi	r24, 0x30	; 48
+  70:	90 e0       	ldi	r25, 0x00	; 0
+  72:	01 97       	sbiw	r24, 0x01	; 1
+  74:	f1 f7       	brne	.-4      	; 0x72 <FCD_Custom0_I2Cask+0x2a>
+	delay_us(20);
+	BitCLK_0; 
+  76:	ba 9a       	sbi	0x17, 2	; 23
+  78:	c2 98       	cbi	0x18, 2	; 24
+}
+  7a:	08 95       	ret
+
+0000007c <FCD_Custom0_I2CStop>:
+
+static void FCD_Custom0_I2CStop()
+{
+	BitCLK_0;
+  7c:	ba 9a       	sbi	0x17, 2	; 23
+  7e:	c2 98       	cbi	0x18, 2	; 24
+  80:	80 e3       	ldi	r24, 0x30	; 48
+  82:	90 e0       	ldi	r25, 0x00	; 0
+  84:	fc 01       	movw	r30, r24
+  86:	31 97       	sbiw	r30, 0x01	; 1
+  88:	f1 f7       	brne	.-4      	; 0x86 <FCD_Custom0_I2CStop+0xa>
+	delay_us(20);
+	DATA_0;
+  8a:	b9 9a       	sbi	0x17, 1	; 23
+  8c:	c1 98       	cbi	0x18, 1	; 24
+  8e:	fc 01       	movw	r30, r24
+  90:	31 97       	sbiw	r30, 0x01	; 1
+  92:	f1 f7       	brne	.-4      	; 0x90 <FCD_Custom0_I2CStop+0x14>
+	delay_us(20);
+	BitCLK_F;
+  94:	ba 98       	cbi	0x17, 2	; 23
+  96:	01 97       	sbiw	r24, 0x01	; 1
+  98:	f1 f7       	brne	.-4      	; 0x96 <FCD_Custom0_I2CStop+0x1a>
+	delay_us(20);
+	DATA_F; 
+  9a:	b9 98       	cbi	0x17, 1	; 23
+}
+  9c:	08 95       	ret
+
+0000009e <FCD_Custom0_I2CWrByte>:
+
+static void FCD_Custom0_I2CWrByte(char oneByte)
+{
+  9e:	90 e0       	ldi	r25, 0x00	; 0
+  a0:	20 e3       	ldi	r18, 0x30	; 48
+  a2:	30 e0       	ldi	r19, 0x00	; 0
+	unsigned char i;
+	for (i=0; i<8; i++)
+	{
+	BitCLK_0;
+  a4:	ba 9a       	sbi	0x17, 2	; 23
+  a6:	c2 98       	cbi	0x18, 2	; 24
+	if (oneByte & 0x01) 
+  a8:	80 ff       	sbrs	r24, 0
+  aa:	02 c0       	rjmp	.+4      	; 0xb0 <__stack+0x11>
+	{DATA_F;}
+  ac:	b9 98       	cbi	0x17, 1	; 23
+  ae:	02 c0       	rjmp	.+4      	; 0xb4 <__stack+0x15>
+	else {DATA_0;}
+  b0:	b9 9a       	sbi	0x17, 1	; 23
+  b2:	c1 98       	cbi	0x18, 1	; 24
+  b4:	f9 01       	movw	r30, r18
+  b6:	31 97       	sbiw	r30, 0x01	; 1
+  b8:	f1 f7       	brne	.-4      	; 0xb6 <__stack+0x17>
+	delay_us(20);
+	 oneByte = oneByte>>1;
+	BitCLK_F;
+  ba:	ba 98       	cbi	0x17, 2	; 23
+  bc:	f9 01       	movw	r30, r18
+  be:	31 97       	sbiw	r30, 0x01	; 1
+  c0:	f1 f7       	brne	.-4      	; 0xbe <__stack+0x1f>
+}
+
+static void FCD_Custom0_I2CWrByte(char oneByte)
+{
+	unsigned char i;
+	for (i=0; i<8; i++)
+  c2:	9f 5f       	subi	r25, 0xFF	; 255
+  c4:	98 30       	cpi	r25, 0x08	; 8
+  c6:	11 f0       	breq	.+4      	; 0xcc <__stack+0x2d>
+	BitCLK_0;
+	if (oneByte & 0x01) 
+	{DATA_F;}
+	else {DATA_0;}
+	delay_us(20);
+	 oneByte = oneByte>>1;
+  c8:	86 95       	lsr	r24
+  ca:	ec cf       	rjmp	.-40     	; 0xa4 <__stack+0x5>
+  cc:	08 95       	ret
+
+000000ce <FC_CAL_Enable_ADC>:
+// Unknown
+*******************************************************************************************/
+
+#ifdef MX_ADC_TYPE_5
+	void FC_CAL_Enable_ADC (MX_UINT8 Channel, MX_UINT8 Conv_Speed, MX_UINT8 Vref, MX_UINT8 T_Charge)
+	{
+  ce:	38 2f       	mov	r19, r24
+  d0:	52 2f       	mov	r21, r18
+		tris_mask = Channel;
+  d2:	80 93 79 00 	sts	0x0079, r24
+		if (Channel != 3)
+  d6:	83 30       	cpi	r24, 0x03	; 3
+  d8:	39 f0       	breq	.+14     	; 0xe8 <FC_CAL_Enable_ADC+0x1a>
+		{
+			if (Channel == 0)
+  da:	88 23       	and	r24, r24
+  dc:	11 f4       	brne	.+4      	; 0xe2 <FC_CAL_Enable_ADC+0x14>
+				tris_mask = 5;
+  de:	85 e0       	ldi	r24, 0x05	; 5
+  e0:	01 c0       	rjmp	.+2      	; 0xe4 <FC_CAL_Enable_ADC+0x16>
+			else tris_mask <<= 1;
+  e2:	88 0f       	add	r24, r24
+  e4:	80 93 79 00 	sts	0x0079, r24
+		}
+		tris_reg = (MX_UINT8*) &DDRB;
+  e8:	87 e3       	ldi	r24, 0x37	; 55
+  ea:	90 e0       	ldi	r25, 0x00	; 0
+  ec:	90 93 77 00 	sts	0x0077, r25
+  f0:	80 93 76 00 	sts	0x0076, r24
+		old_tris = *tris_reg;
+  f4:	27 b3       	in	r18, 0x17	; 23
+  f6:	20 93 7b 00 	sts	0x007B, r18
+
+		*tris_reg &= ~(1 << tris_mask);			//turn selected ADC on
+  fa:	81 e0       	ldi	r24, 0x01	; 1
+  fc:	90 e0       	ldi	r25, 0x00	; 0
+  fe:	00 90 79 00 	lds	r0, 0x0079
+ 102:	02 c0       	rjmp	.+4      	; 0x108 <FC_CAL_Enable_ADC+0x3a>
+ 104:	88 0f       	add	r24, r24
+ 106:	99 1f       	adc	r25, r25
+ 108:	0a 94       	dec	r0
+ 10a:	e2 f7       	brpl	.-8      	; 0x104 <FC_CAL_Enable_ADC+0x36>
+ 10c:	80 95       	com	r24
+ 10e:	82 23       	and	r24, r18
+ 110:	87 bb       	out	0x17, r24	; 23
+		ADCSRA = (1 << ADEN) | Conv_Speed;
+ 112:	60 68       	ori	r22, 0x80	; 128
+ 114:	66 b9       	out	0x06, r22	; 6
+		ADMUX = (Vref << REFS0) | (1 << ADLAR) | Channel;
+ 116:	30 62       	ori	r19, 0x20	; 32
+ 118:	42 95       	swap	r20
+ 11a:	44 0f       	add	r20, r20
+ 11c:	44 0f       	add	r20, r20
+ 11e:	40 7c       	andi	r20, 0xC0	; 192
+ 120:	43 2b       	or	r20, r19
+ 122:	47 b9       	out	0x07, r20	; 7
+ 124:	65 2f       	mov	r22, r21
+ 126:	70 e0       	ldi	r23, 0x00	; 0
+ 128:	80 e0       	ldi	r24, 0x00	; 0
+ 12a:	90 e0       	ldi	r25, 0x00	; 0
+ 12c:	28 e1       	ldi	r18, 0x18	; 24
+ 12e:	30 e0       	ldi	r19, 0x00	; 0
+ 130:	40 e0       	ldi	r20, 0x00	; 0
+ 132:	50 e0       	ldi	r21, 0x00	; 0
+ 134:	1d d1       	rcall	.+570    	; 0x370 <__mulsi3>
+ 136:	2a e0       	ldi	r18, 0x0A	; 10
+ 138:	30 e0       	ldi	r19, 0x00	; 0
+ 13a:	40 e0       	ldi	r20, 0x00	; 0
+ 13c:	50 e0       	ldi	r21, 0x00	; 0
+ 13e:	31 d1       	rcall	.+610    	; 0x3a2 <__udivmodsi4>
+ 140:	c9 01       	movw	r24, r18
+ 142:	01 97       	sbiw	r24, 0x01	; 1
+ 144:	f1 f7       	brne	.-4      	; 0x142 <FC_CAL_Enable_ADC+0x74>
+
+		delay_us(T_Charge);			//wait the acquisition time
+	}
+ 146:	08 95       	ret
+
+00000148 <FC_CAL_Sample_ADC>:
+
+	MX_UINT16 FC_CAL_Sample_ADC (MX_UINT8 Sample_Mode)
+	{
+		MX_UINT16 iRetVal;
+
+		ADCSRA |= (1 << ADSC);				//begin conversion and wait until it has finished
+ 148:	36 9a       	sbi	0x06, 6	; 6
+		while(ADCSRA & (1 << ADSC));
+ 14a:	36 99       	sbic	0x06, 6	; 6
+ 14c:	fe cf       	rjmp	.-4      	; 0x14a <FC_CAL_Sample_ADC+0x2>
+
+		if (Sample_Mode)
+ 14e:	88 23       	and	r24, r24
+ 150:	79 f0       	breq	.+30     	; 0x170 <FC_CAL_Sample_ADC+0x28>
+		{
+			iRetVal = (ADCL >> 6);								//10-bit ADC
+ 152:	84 b1       	in	r24, 0x04	; 4
+ 154:	82 95       	swap	r24
+ 156:	86 95       	lsr	r24
+ 158:	86 95       	lsr	r24
+ 15a:	83 70       	andi	r24, 0x03	; 3
+ 15c:	90 e0       	ldi	r25, 0x00	; 0
+			iRetVal |= (ADCH << 2);
+ 15e:	25 b1       	in	r18, 0x05	; 5
+ 160:	30 e0       	ldi	r19, 0x00	; 0
+ 162:	22 0f       	add	r18, r18
+ 164:	33 1f       	adc	r19, r19
+ 166:	22 0f       	add	r18, r18
+ 168:	33 1f       	adc	r19, r19
+ 16a:	28 2b       	or	r18, r24
+ 16c:	39 2b       	or	r19, r25
+ 16e:	03 c0       	rjmp	.+6      	; 0x176 <FC_CAL_Sample_ADC+0x2e>
+		}
+		else
+			iRetVal = ADCH;										//8-bit ADC
+ 170:	85 b1       	in	r24, 0x05	; 5
+ 172:	28 2f       	mov	r18, r24
+ 174:	30 e0       	ldi	r19, 0x00	; 0
+
+		return (iRetVal);
+	}
+ 176:	c9 01       	movw	r24, r18
+ 178:	08 95       	ret
+
+0000017a <FC_CAL_Disable_ADC>:
+
+	void FC_CAL_Disable_ADC ()
+	{
+		*tris_reg = old_tris;			//restore old tris value, and reset adc registers
+ 17a:	e0 91 76 00 	lds	r30, 0x0076
+ 17e:	f0 91 77 00 	lds	r31, 0x0077
+ 182:	80 91 7b 00 	lds	r24, 0x007B
+ 186:	80 83       	st	Z, r24
+		ADCSRA &= ~(1 << ADEN);
+ 188:	37 98       	cbi	0x06, 7	; 6
+	}
+ 18a:	08 95       	ret
+
+0000018c <FCM_LED>:
+	//??????????:
+	//  led[0] = 0
+	//  led[1] = 0
+	//  led[2] = 0
+	//  //led[3] = 0
+	FCV_LED[0] = 0;
+ 18c:	10 92 7c 00 	sts	0x007C, r1
+	FCV_LED[1] = 0;
+ 190:	10 92 7d 00 	sts	0x007D, r1
+	FCV_LED[2] = 0;
+ 194:	10 92 7e 00 	sts	0x007E, r1
+FCC_LED_A:
+;
+
+	//???????
+	//???????: u >= 400?
+	if (FCV_U >= 400)
+ 198:	80 91 74 00 	lds	r24, 0x0074
+ 19c:	90 91 75 00 	lds	r25, 0x0075
+ 1a0:	80 59       	subi	r24, 0x90	; 144
+ 1a2:	91 40       	sbci	r25, 0x01	; 1
+ 1a4:	80 f0       	brcs	.+32     	; 0x1c6 <FCM_LED+0x3a>
+
+		//??????????
+		//??????????:
+		//  led[0] = led[0] + 1
+		//  u = u - 400
+		FCV_LED[0] = FCV_LED[0] + 1;
+ 1a6:	80 91 7c 00 	lds	r24, 0x007C
+ 1aa:	8f 5f       	subi	r24, 0xFF	; 255
+ 1ac:	80 93 7c 00 	sts	0x007C, r24
+		FCV_U = FCV_U - 400;
+ 1b0:	80 91 74 00 	lds	r24, 0x0074
+ 1b4:	90 91 75 00 	lds	r25, 0x0075
+ 1b8:	80 59       	subi	r24, 0x90	; 144
+ 1ba:	91 40       	sbci	r25, 0x01	; 1
+ 1bc:	90 93 75 00 	sts	0x0075, r25
+ 1c0:	80 93 74 00 	sts	0x0074, r24
+ 1c4:	e9 cf       	rjmp	.-46     	; 0x198 <FCM_LED+0xc>
+FCC_LED_B:
+;
+
+	//???????
+	//???????: u >= 40?
+	if (FCV_U >= 40)
+ 1c6:	80 91 74 00 	lds	r24, 0x0074
+ 1ca:	90 91 75 00 	lds	r25, 0x0075
+ 1ce:	88 97       	sbiw	r24, 0x28	; 40
+ 1d0:	78 f0       	brcs	.+30     	; 0x1f0 <FCM_LED+0x64>
+
+		//??????????
+		//??????????:
+		//  led[1] = led[1] + 1
+		//  u = u - 40
+		FCV_LED[1] = FCV_LED[1] + 1;
+ 1d2:	80 91 7d 00 	lds	r24, 0x007D
+ 1d6:	8f 5f       	subi	r24, 0xFF	; 255
+ 1d8:	80 93 7d 00 	sts	0x007D, r24
+		FCV_U = FCV_U - 40;
+ 1dc:	80 91 74 00 	lds	r24, 0x0074
+ 1e0:	90 91 75 00 	lds	r25, 0x0075
+ 1e4:	88 97       	sbiw	r24, 0x28	; 40
+ 1e6:	90 93 75 00 	sts	0x0075, r25
+ 1ea:	80 93 74 00 	sts	0x0074, r24
+ 1ee:	eb cf       	rjmp	.-42     	; 0x1c6 <FCM_LED+0x3a>
+FCC_LED_C:
+;
+
+	//???????
+	//???????: u >= 4?
+	if (FCV_U >= 4)
+ 1f0:	80 91 74 00 	lds	r24, 0x0074
+ 1f4:	90 91 75 00 	lds	r25, 0x0075
+ 1f8:	04 97       	sbiw	r24, 0x04	; 4
+ 1fa:	78 f0       	brcs	.+30     	; 0x21a <FCM_LED+0x8e>
+
+		//??????????
+		//??????????:
+		//  led[2] = led[2] + 1
+		//  u = u - 4
+		FCV_LED[2] = FCV_LED[2] + 1;
+ 1fc:	80 91 7e 00 	lds	r24, 0x007E
+ 200:	8f 5f       	subi	r24, 0xFF	; 255
+ 202:	80 93 7e 00 	sts	0x007E, r24
+		FCV_U = FCV_U - 4;
+ 206:	80 91 74 00 	lds	r24, 0x0074
+ 20a:	90 91 75 00 	lds	r25, 0x0075
+ 20e:	04 97       	sbiw	r24, 0x04	; 4
+ 210:	90 93 75 00 	sts	0x0075, r25
+ 214:	80 93 74 00 	sts	0x0074, r24
+ 218:	eb cf       	rjmp	.-42     	; 0x1f0 <FCM_LED+0x64>
+ 21a:	08 95       	ret
+
+0000021c <main>:
+	#endif // #if 0: Disabled code
+}
+
+
+int main()
+{
+ 21c:	5f 92       	push	r5
+ 21e:	6f 92       	push	r6
+ 220:	7f 92       	push	r7
+ 222:	8f 92       	push	r8
+ 224:	9f 92       	push	r9
+ 226:	af 92       	push	r10
+ 228:	bf 92       	push	r11
+ 22a:	cf 92       	push	r12
+ 22c:	df 92       	push	r13
+ 22e:	ef 92       	push	r14
+ 230:	ff 92       	push	r15
+ 232:	0f 93       	push	r16
+ 234:	1f 93       	push	r17
+ 236:	df 93       	push	r29
+ 238:	cf 93       	push	r28
+ 23a:	00 d0       	rcall	.+0      	; 0x23c <main+0x20>
+ 23c:	00 d0       	rcall	.+0      	; 0x23e <main+0x22>
+ 23e:	cd b7       	in	r28, 0x3d	; 61
+ 240:	de b7       	in	r29, 0x3e	; 62
+	//?????????????
+	MCUSR=0x00;
+ 242:	14 be       	out	0x34, r1	; 52
+	wdt_disable();
+ 244:	88 e1       	ldi	r24, 0x18	; 24
+ 246:	0f b6       	in	r0, 0x3f	; 63
+ 248:	f8 94       	cli
+ 24a:	81 bd       	out	0x21, r24	; 33
+ 24c:	11 bc       	out	0x21, r1	; 33
+ 24e:	0f be       	out	0x3f, r0	; 63
+
+	//??????????
+	//??????????:
+	//  led[3] = 17 //u
+	//  //dot = 1
+	FCV_LED[3] = 17;
+ 250:	a1 e1       	ldi	r26, 0x11	; 17
+ 252:	5a 2e       	mov	r5, r26
+
+		//??????????
+		//??????????:
+		//  led[3] = 16 //o
+		//  //dot = 0
+		FCV_LED[3] = 16;
+ 254:	f0 e1       	ldi	r31, 0x10	; 16
+ 256:	ef 2e       	mov	r14, r31
+ 258:	e0 e3       	ldi	r30, 0x30	; 48
+ 25a:	ce 2e       	mov	r12, r30
+ 25c:	d1 2c       	mov	r13, r1
+{
+	MX_UINT8 number[4] = {digit1,digit2,digit3,digit4};
+	MX_UINT8 i; 
+	FCD_Custom0_I2CStart();
+	FCD_Custom0_I2CWrByte(0xC0); // ????? ?????? ??????
+	FCD_Custom0_I2Cask();
+ 25e:	3e 01       	movw	r6, r28
+ 260:	08 94       	sec
+ 262:	61 1c       	adc	r6, r1
+ 264:	71 1c       	adc	r7, r1
+	for (i=0; i<4; i++)
+ 266:	75 e0       	ldi	r23, 0x05	; 5
+ 268:	87 2e       	mov	r8, r23
+ 26a:	91 2c       	mov	r9, r1
+ 26c:	8c 0e       	add	r8, r28
+ 26e:	9d 1e       	adc	r9, r29
+ 270:	60 e6       	ldi	r22, 0x60	; 96
+ 272:	a6 2e       	mov	r10, r22
+ 274:	69 e0       	ldi	r22, 0x09	; 9
+ 276:	b6 2e       	mov	r11, r22
+FCC_Main_A:
+;
+
+	//????
+	//????: B3 -> mode
+	DDRB = DDRB & 0xF7;
+ 278:	bb 98       	cbi	0x17, 3	; 23
+	FCV_MODE = ((PINB & 0x08) == 0x08);
+ 27a:	86 b3       	in	r24, 0x16	; 22
+ 27c:	90 e0       	ldi	r25, 0x00	; 0
+ 27e:	53 e0       	ldi	r21, 0x03	; 3
+ 280:	96 95       	lsr	r25
+ 282:	87 95       	ror	r24
+ 284:	5a 95       	dec	r21
+ 286:	e1 f7       	brne	.-8      	; 0x280 <main+0x64>
+ 288:	81 70       	andi	r24, 0x01	; 1
+ 28a:	80 93 78 00 	sts	0x0078, r24
+{
+	
+		MX_UINT16 retVal;
+
+		//Configure & Enable ADC Channel
+		FC_CAL_Enable_ADC ( ADC_1_MX_ADC_CHANNEL , ADC_1_MX_ADC_CONVSP , ADC_1_MX_ADC_VREFOP , ADC_1_MX_ADC_ACTIME );
+ 28e:	82 e0       	ldi	r24, 0x02	; 2
+ 290:	66 e0       	ldi	r22, 0x06	; 6
+ 292:	41 e0       	ldi	r20, 0x01	; 1
+ 294:	28 e2       	ldi	r18, 0x28	; 40
+ 296:	1b df       	rcall	.-458    	; 0xce <FC_CAL_Enable_ADC>
+
+		retVal = FC_CAL_Sample_ADC( 1 );				//Perform Sample - Return as MX_UINT16
+ 298:	81 e0       	ldi	r24, 0x01	; 1
+ 29a:	56 df       	rcall	.-340    	; 0x148 <FC_CAL_Sample_ADC>
+		return (iRetVal);
+	}
+
+	void FC_CAL_Disable_ADC ()
+	{
+		*tris_reg = old_tris;			//restore old tris value, and reset adc registers
+ 29c:	e0 91 76 00 	lds	r30, 0x0076
+ 2a0:	f0 91 77 00 	lds	r31, 0x0077
+ 2a4:	20 91 7b 00 	lds	r18, 0x007B
+ 2a8:	20 83       	st	Z, r18
+		ADCSRA &= ~(1 << ADEN);
+ 2aa:	37 98       	cbi	0x06, 7	; 6
+	//mode=0 R meter
+	//mode=1 U meter
+
+	//?????? ??????????
+	//?????? ??????????: u=?????? ?a? Int()
+	FCV_U = FCD_ADC0_ReadAsInt();
+ 2ac:	90 93 75 00 	sts	0x0075, r25
+ 2b0:	80 93 74 00 	sts	0x0074, r24
+
+	//??????????
+	//??????????:
+	//  led[3] = 17 //u
+	//  //dot = 1
+	FCV_LED[3] = 17;
+ 2b4:	50 92 7f 00 	sts	0x007F, r5
+
+	//???????
+	//???????: mode = 0?
+	if (FCV_MODE == 0)
+ 2b8:	80 91 78 00 	lds	r24, 0x0078
+ 2bc:	88 23       	and	r24, r24
+ 2be:	59 f4       	brne	.+22     	; 0x2d6 <main+0xba>
+
+		//??????????
+		//??????????:
+		//  led[3] = 16 //o
+		//  //dot = 0
+		FCV_LED[3] = 16;
+ 2c0:	e0 92 7f 00 	sts	0x007F, r14
+
+		//???????
+		//???????: u < 100?
+		if (FCV_U < 100)
+ 2c4:	80 91 74 00 	lds	r24, 0x0074
+ 2c8:	90 91 75 00 	lds	r25, 0x0075
+ 2cc:	84 36       	cpi	r24, 0x64	; 100
+ 2ce:	91 05       	cpc	r25, r1
+ 2d0:	10 f4       	brcc	.+4      	; 0x2d6 <main+0xba>
+			//U<50* R<10 om
+			//U<100 R<25 om
+
+			//?????
+			//?????: 1 -> B0
+			DDRB = DDRB | 0x01;
+ 2d2:	b8 9a       	sbi	0x17, 0	; 23
+			if ((1))
+				PORTB = (PORTB & 0xFE) | 0x01;
+ 2d4:	c0 9a       	sbi	0x18, 0	; 24
+
+	}
+
+	//??????
+	//??????: LED()
+	FCM_LED();
+ 2d6:	5a df       	rcall	.-332    	; 0x18c <FCM_LED>
+
+	//?????? ??????????
+	//?????? ??????????: show_digit(mode, 1, led[0], led[1], led[2], led[3])
+	FCD_Custom0_show_digit(FCV_MODE, 1, FCV_LED[0], FCV_LED[1], FCV_LED[2], FCV_LED[3]);
+ 2d8:	f0 90 78 00 	lds	r15, 0x0078
+ 2dc:	80 91 7c 00 	lds	r24, 0x007C
+ 2e0:	90 91 7d 00 	lds	r25, 0x007D
+ 2e4:	20 91 7e 00 	lds	r18, 0x007E
+ 2e8:	30 91 7f 00 	lds	r19, 0x007F
+	} 
+}
+
+static void FCD_Custom0_show_digit(char DOT, char bright, char digit1, char digit2, char digit3, char digit4)
+{
+	MX_UINT8 number[4] = {digit1,digit2,digit3,digit4};
+ 2ec:	89 83       	std	Y+1, r24	; 0x01
+ 2ee:	9a 83       	std	Y+2, r25	; 0x02
+ 2f0:	2b 83       	std	Y+3, r18	; 0x03
+ 2f2:	3c 83       	std	Y+4, r19	; 0x04
+
+}
+
+static void FCD_Custom0_I2CStart()
+{
+	BitCLK_F;
+ 2f4:	ba 98       	cbi	0x17, 2	; 23
+	DATA_F;
+ 2f6:	b9 98       	cbi	0x17, 1	; 23
+ 2f8:	c6 01       	movw	r24, r12
+ 2fa:	01 97       	sbiw	r24, 0x01	; 1
+ 2fc:	f1 f7       	brne	.-4      	; 0x2fa <main+0xde>
+	delay_us(20);
+	DATA_0;
+ 2fe:	b9 9a       	sbi	0x17, 1	; 23
+ 300:	c1 98       	cbi	0x18, 1	; 24
+static void FCD_Custom0_show_digit(char DOT, char bright, char digit1, char digit2, char digit3, char digit4)
+{
+	MX_UINT8 number[4] = {digit1,digit2,digit3,digit4};
+	MX_UINT8 i; 
+	FCD_Custom0_I2CStart();
+	FCD_Custom0_I2CWrByte(0xC0); // ????? ?????? ??????
+ 302:	80 ec       	ldi	r24, 0xC0	; 192
+ 304:	cc de       	rcall	.-616    	; 0x9e <FCD_Custom0_I2CWrByte>
+	FCD_Custom0_I2Cask();
+ 306:	a0 de       	rcall	.-704    	; 0x48 <FCD_Custom0_I2Cask>
+ 308:	83 01       	movw	r16, r6
+ 30a:	d8 01       	movw	r26, r16
+ 30c:	ec 91       	ld	r30, X
+	for (i=0; i<4; i++)
+	{
+	  if (DOT == 1)
+ 30e:	b1 e0       	ldi	r27, 0x01	; 1
+ 310:	fb 16       	cp	r15, r27
+ 312:	31 f4       	brne	.+12     	; 0x320 <main+0x104>
+	    {
+	     symbol[number[i]]=symbol[number[i]] | 0b10000000;
+ 314:	f0 e0       	ldi	r31, 0x00	; 0
+ 316:	e0 5a       	subi	r30, 0xA0	; 160
+ 318:	ff 4f       	sbci	r31, 0xFF	; 255
+ 31a:	80 81       	ld	r24, Z
+ 31c:	80 68       	ori	r24, 0x80	; 128
+ 31e:	05 c0       	rjmp	.+10     	; 0x32a <main+0x10e>
+	    }
+	     else 
+	       {
+	        symbol[number[i]]=symbol[number[i]] & 0b01111111;
+ 320:	f0 e0       	ldi	r31, 0x00	; 0
+ 322:	e0 5a       	subi	r30, 0xA0	; 160
+ 324:	ff 4f       	sbci	r31, 0xFF	; 255
+ 326:	80 81       	ld	r24, Z
+ 328:	8f 77       	andi	r24, 0x7F	; 127
+ 32a:	80 83       	st	Z, r24
+	       }
+	  FCD_Custom0_I2CWrByte(symbol[number[i]]); // Send data
+ 32c:	d8 01       	movw	r26, r16
+ 32e:	ed 91       	ld	r30, X+
+ 330:	8d 01       	movw	r16, r26
+ 332:	f0 e0       	ldi	r31, 0x00	; 0
+ 334:	e0 5a       	subi	r30, 0xA0	; 160
+ 336:	ff 4f       	sbci	r31, 0xFF	; 255
+ 338:	80 81       	ld	r24, Z
+ 33a:	b1 de       	rcall	.-670    	; 0x9e <FCD_Custom0_I2CWrByte>
+	  FCD_Custom0_I2Cask();
+ 33c:	85 de       	rcall	.-758    	; 0x48 <FCD_Custom0_I2Cask>
+	MX_UINT8 number[4] = {digit1,digit2,digit3,digit4};
+	MX_UINT8 i; 
+	FCD_Custom0_I2CStart();
+	FCD_Custom0_I2CWrByte(0xC0); // ????? ?????? ??????
+	FCD_Custom0_I2Cask();
+	for (i=0; i<4; i++)
+ 33e:	08 15       	cp	r16, r8
+ 340:	19 05       	cpc	r17, r9
+ 342:	19 f7       	brne	.-58     	; 0x30a <main+0xee>
+	        symbol[number[i]]=symbol[number[i]] & 0b01111111;
+	       }
+	  FCD_Custom0_I2CWrByte(symbol[number[i]]); // Send data
+	  FCD_Custom0_I2Cask();
+	}
+	FCD_Custom0_I2CStop();
+ 344:	9b de       	rcall	.-714    	; 0x7c <FCD_Custom0_I2CStop>
+
+}
+
+static void FCD_Custom0_I2CStart()
+{
+	BitCLK_F;
+ 346:	ba 98       	cbi	0x17, 2	; 23
+	DATA_F;
+ 348:	b9 98       	cbi	0x17, 1	; 23
+ 34a:	c6 01       	movw	r24, r12
+ 34c:	01 97       	sbiw	r24, 0x01	; 1
+ 34e:	f1 f7       	brne	.-4      	; 0x34c <main+0x130>
+	delay_us(20);
+	DATA_0;
+ 350:	b9 9a       	sbi	0x17, 1	; 23
+ 352:	c1 98       	cbi	0x18, 1	; 24
+	  FCD_Custom0_I2Cask();
+	}
+	FCD_Custom0_I2CStop();
+	bright=bright+0x88;
+	FCD_Custom0_I2CStart();
+	FCD_Custom0_I2CWrByte(bright); // ??????? ???????
+ 354:	89 e8       	ldi	r24, 0x89	; 137
+ 356:	a3 de       	rcall	.-698    	; 0x9e <FCD_Custom0_I2CWrByte>
+	FCD_Custom0_I2Cask();
+ 358:	77 de       	rcall	.-786    	; 0x48 <FCD_Custom0_I2Cask>
+	FCD_Custom0_I2CStop(); 
+ 35a:	90 de       	rcall	.-736    	; 0x7c <FCD_Custom0_I2CStop>
+ 35c:	20 e0       	ldi	r18, 0x00	; 0
+ 35e:	c5 01       	movw	r24, r10
+ 360:	01 97       	sbiw	r24, 0x01	; 1
+ 362:	f1 f7       	brne	.-4      	; 0x360 <main+0x144>
+
+void delay_ms(uint8_t __ms)
+{
+	uint8_t __ticks;
+
+	for(__ticks=0;__ticks<__ms;__ticks++)
+ 364:	2f 5f       	subi	r18, 0xFF	; 255
+ 366:	28 3c       	cpi	r18, 0xC8	; 200
+ 368:	d1 f7       	brne	.-12     	; 0x35e <main+0x142>
+	//????????: 200 ??
+	delay_ms(200);
+
+	//?????
+	//?????: 0 -> B0
+	DDRB = DDRB | 0x01;
+ 36a:	b8 9a       	sbi	0x17, 0	; 23
+	if ((0))
+		PORTB = (PORTB & 0xFE) | 0x01;
+	else
+		PORTB = PORTB & 0xFE;
+ 36c:	c0 98       	cbi	0x18, 0	; 24
+ 36e:	84 cf       	rjmp	.-248    	; 0x278 <main+0x5c>
+
+00000370 <__mulsi3>:
+ 370:	ff 27       	eor	r31, r31
+ 372:	ee 27       	eor	r30, r30
+ 374:	bb 27       	eor	r27, r27
+ 376:	aa 27       	eor	r26, r26
+
+00000378 <__mulsi3_loop>:
+ 378:	60 ff       	sbrs	r22, 0
+ 37a:	04 c0       	rjmp	.+8      	; 0x384 <__mulsi3_skip1>
+ 37c:	a2 0f       	add	r26, r18
+ 37e:	b3 1f       	adc	r27, r19
+ 380:	e4 1f       	adc	r30, r20
+ 382:	f5 1f       	adc	r31, r21
+
+00000384 <__mulsi3_skip1>:
+ 384:	22 0f       	add	r18, r18
+ 386:	33 1f       	adc	r19, r19
+ 388:	44 1f       	adc	r20, r20
+ 38a:	55 1f       	adc	r21, r21
+ 38c:	96 95       	lsr	r25
+ 38e:	87 95       	ror	r24
+ 390:	77 95       	ror	r23
+ 392:	67 95       	ror	r22
+ 394:	89 f7       	brne	.-30     	; 0x378 <__mulsi3_loop>
+ 396:	00 97       	sbiw	r24, 0x00	; 0
+ 398:	76 07       	cpc	r23, r22
+ 39a:	71 f7       	brne	.-36     	; 0x378 <__mulsi3_loop>
+
+0000039c <__mulsi3_exit>:
+ 39c:	cf 01       	movw	r24, r30
+ 39e:	bd 01       	movw	r22, r26
+ 3a0:	08 95       	ret
+
+000003a2 <__udivmodsi4>:
+ 3a2:	a1 e2       	ldi	r26, 0x21	; 33
+ 3a4:	1a 2e       	mov	r1, r26
+ 3a6:	aa 1b       	sub	r26, r26
+ 3a8:	bb 1b       	sub	r27, r27
+ 3aa:	fd 01       	movw	r30, r26
+ 3ac:	0d c0       	rjmp	.+26     	; 0x3c8 <__udivmodsi4_ep>
+
+000003ae <__udivmodsi4_loop>:
+ 3ae:	aa 1f       	adc	r26, r26
+ 3b0:	bb 1f       	adc	r27, r27
+ 3b2:	ee 1f       	adc	r30, r30
+ 3b4:	ff 1f       	adc	r31, r31
+ 3b6:	a2 17       	cp	r26, r18
+ 3b8:	b3 07       	cpc	r27, r19
+ 3ba:	e4 07       	cpc	r30, r20
+ 3bc:	f5 07       	cpc	r31, r21
+ 3be:	20 f0       	brcs	.+8      	; 0x3c8 <__udivmodsi4_ep>
+ 3c0:	a2 1b       	sub	r26, r18
+ 3c2:	b3 0b       	sbc	r27, r19
+ 3c4:	e4 0b       	sbc	r30, r20
+ 3c6:	f5 0b       	sbc	r31, r21
+
+000003c8 <__udivmodsi4_ep>:
+ 3c8:	66 1f       	adc	r22, r22
+ 3ca:	77 1f       	adc	r23, r23
+ 3cc:	88 1f       	adc	r24, r24
+ 3ce:	99 1f       	adc	r25, r25
+ 3d0:	1a 94       	dec	r1
+ 3d2:	69 f7       	brne	.-38     	; 0x3ae <__udivmodsi4_loop>
+ 3d4:	60 95       	com	r22
+ 3d6:	70 95       	com	r23
+ 3d8:	80 95       	com	r24
+ 3da:	90 95       	com	r25
+ 3dc:	9b 01       	movw	r18, r22
+ 3de:	ac 01       	movw	r20, r24
+ 3e0:	bd 01       	movw	r22, r26
+ 3e2:	cf 01       	movw	r24, r30
+ 3e4:	08 95       	ret
+
+000003e6 <_exit>:
+ 3e6:	f8 94       	cli
+
+000003e8 <__stop_program>:
+ 3e8:	ff cf       	rjmp	.-2      	; 0x3e8 <__stop_program>
